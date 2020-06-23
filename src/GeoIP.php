@@ -3,6 +3,7 @@
 namespace Torann\GeoIP;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Monolog\Logger;
 use Illuminate\Support\Arr;
 use Illuminate\Cache\CacheManager;
@@ -159,9 +160,7 @@ class GeoIP
                 return $location;
             } catch (\Exception $e) {
                 if ($this->config('log_failures', true) === true) {
-                    $log = new Logger('geoip');
-                    $log->pushHandler(new StreamHandler(storage_path('logs/geoip.log'), Logger::ERROR));
-                    $log->error($e);
+                    Log::error($e);
                 }
             }
         }
